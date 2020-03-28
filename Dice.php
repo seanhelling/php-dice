@@ -34,12 +34,15 @@
         const DEFAULT_NUMBER_OF_SIDES       = 20;
         const DEFAULT_DICE_ROLL_MODIFIER    = '+0';
 
-        protected $rollText;
-        protected $numRolls;
-        protected $numDice;
-        protected $kindDice;
-        protected $modifier;
-        protected $results = [];
+        protected $rollText     = self::DEFAULT_NUMBER_OF_ROLLS.'x'.
+                                  self::DEFAULT_NUMBER_OF_DICE.
+                                  'd'.self::DEFAULT_NUMBER_OF_SIDES.
+                                  self::DEFAULT_DICE_ROLL_MODIFIER;
+        protected $numRolls     = self::DEFAULT_NUMBER_OF_ROLLS;
+        protected $numDice      = self::DEFAULT_NUMBER_OF_DICE;
+        protected $kindDice     = self::DEFAULT_NUMBER_OF_SIDES;
+        protected $modifier     = self::DEFAULT_DICE_ROLL_MODIFIER;
+        protected $results      = [];
 
         public function __construct( $input = NULL ) {
             if(!is_null($input)) {
@@ -113,6 +116,7 @@
             return $this->results['details'] ?
                     array(
                         'result'    => $this->results['final'],
+                        'params'    => $this->rollText,
                         'details'   => $this->results['details']
                     ) : NULL;
         }
