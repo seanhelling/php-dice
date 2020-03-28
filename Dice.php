@@ -129,7 +129,7 @@
             $this->results['totalUpperBound'] = $this->numRolls * (($this->numDice*$this->kindDice)+$this->parseModifier($this->modifier));
             // Min/max for each die
             $this->results['dieLowerBound'] = 1;
-            $this->results['dieUpperBound'] = $this->kindDice;
+            $this->results['dieUpperBound'] = intval($this->kindDice);
             return $details ? $this->details() : $this->result();
         }
 
