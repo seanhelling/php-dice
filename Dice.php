@@ -56,6 +56,7 @@
         const DEFAULT_NUMBER_OF_DICE        = 1;
         const DEFAULT_NUMBER_OF_SIDES       = 20;
         const DEFAULT_DICE_ROLL_MODIFIER    = '+0';
+        const QUALITY_STARTS_AT_ZERO        = false;
 
         protected $rollText     = self::DEFAULT_NUMBER_OF_ROLLS.'x'.
                                   self::DEFAULT_NUMBER_OF_DICE.
@@ -66,6 +67,7 @@
         protected $kindDice     = self::DEFAULT_NUMBER_OF_SIDES;
         protected $modifier     = self::DEFAULT_DICE_ROLL_MODIFIER;
         protected $results      = [];
+        protected $quality      = 0;
 
         public function __construct( $input = NULL ) {
             if(!is_null($input)) {
@@ -125,12 +127,24 @@
                 $this->results['final'] += $this->parseModifier($this->modifier);
                 
             }
+            
             // Min/max for entire roll
             $this->results['totalLowerBound'] = $this->numRolls * (($this->numDice*1)+$this->parseModifier($this->modifier));
             $this->results['totalUpperBound'] = $this->numRolls * (($this->numDice*$this->kindDice)+$this->parseModifier($this->modifier));
+
             // Min/max for each die
             $this->results['dieLowerBound'] = 1;
             $this->results['dieUpperBound'] = intval($this->kindDice);
+
+            if(self::QUALITY_STARTS_AT_ZERO) {
+                $this->quality = 
+                    ($this->results['final']-$this->results['totalLowerBound']) / 
+                    ($this->results['totalUpperBound']-$this->results['totalLowerBound']);
+            }
+            else {
+                $this->quality = $this->results['final'] / $this->results['totalUpperBound'];
+            }
+
             return $details ? $this->details() : $this->result();
         }
 
@@ -149,11 +163,12 @@
                                 'totalLowerBound' => $this->results['totalLowerBound'] ?? NULL,
                                 'totalUpperBound' => $this->results['totalUpperBound'] ?? NULL,
                             ],
-                        'dieBounds'   =>
+                        'dieBounds'     =>
                             [
                                 'dieLowerBound' => $this->results['dieLowerBound'] ?? NULL,
                                 'dieUpperBound' => $this->results['dieUpperBound'] ?? NULL,
                             ],
+                        'quality'       => $this->quality,
                     ) : NULL;
         }
 
@@ -169,6 +184,18 @@
                 'dieLowerBound' => $this->results['dieLowerBound'] ?? NULL,
                 'dieUpperBound' => $this->results['dieUpperBound'] ?? NULL,
             );
+        }
+
+        public function quality($format = false) {
+            switch ($format) {
+                case true:
+                    return (round($this->quality, 4)*100).'%';
+                    break;
+                default:
+                    return round($this->quality, 4);
+                    break;
+            }
+            
         }
 
     }
