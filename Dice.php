@@ -140,23 +140,33 @@
         public function details() {
             return $this->results['details'] ?
                     array(
-                        'result'    => $this->results['final'],
-                        'params'    => $this->rollText,
-                        'details'   => $this->results['details']
+                        'result'        => $this->results['final'],
+                        'params'        => $this->rollText,
+                        'details'       => $this->results['details'],
+                        'totalBounds'   =>
+                            [
+                                'totalLowerBound' => $this->results['totalLowerBound'] ?? NULL,
+                                'totalUpperBound' => $this->results['totalUpperBound'] ?? NULL,
+                            ],
+                        'dieBounds'   =>
+                            [
+                                'dieLowerBound' => $this->results['dieLowerBound'] ?? NULL,
+                                'dieUpperBound' => $this->results['dieUpperBound'] ?? NULL,
+                            ],
                     ) : NULL;
         }
 
         public function totalBounds() {
             return array(
+                'totalLowerBound' => $this->results['totalLowerBound'] ?? NULL,
                 'totalUpperBound' => $this->results['totalUpperBound'] ?? NULL,
-                'totalLowerBound' => $this->results['totalLowerBound'] ?? NULL
             );
         }
 
         public function dieBounds() {
             return array(
+                'dieLowerBound' => $this->results['dieLowerBound'] ?? NULL,
                 'dieUpperBound' => $this->results['dieUpperBound'] ?? NULL,
-                'dieLowerBound' => $this->results['dieLowerBound'] ?? NULL
             );
         }
 
