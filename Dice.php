@@ -95,7 +95,9 @@
                     $this->results['final'] += $thisRoll;
                     $this->results['details']['r'.$i]['d'.$j] = $thisRoll;
                 }
-                $this->results['details']['r'.$i]['mod'] = $this->modifier;
+                if($this->modifier != self::DEFAULT_DICE_ROLL_MODIFIER) {
+                    $this->results['details']['r'.$i]['mod'] = $this->modifier;
+                }
                 $this->results['final'] += $this->parseModifier($this->modifier);
                 
             }
