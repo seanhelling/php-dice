@@ -111,6 +111,7 @@
                  this will overwrite the values given in the constructor. */
                 $this->interpretRoll($input);
             }
+            $this->results = [];
             $this->results['final']=0;
             for ($i=1; $i <= $this->numRolls; $i++) { 
                 for ($j=1; $j <= $this->numDice; $j++) { 
