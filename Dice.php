@@ -89,7 +89,7 @@
                                         $diceRollArray[4][0] : self::DEFAULT_DICE_ROLL_MODIFIER;
         }
 
-        protected function parseModifier( $modifier = DEFAULT_DICE_ROLL_MODIFIER ) {
+        protected function parseModifier( $modifier = self::DEFAULT_DICE_ROLL_MODIFIER ) {
             $mod = substr($modifier, 0, 1);
             $num = substr($modifier, 1);
             switch ($mod) {
@@ -103,7 +103,7 @@
             }
         }
 
-        public function rollDie($sides = self::DEFAULT_NUMBER_OF_SIDES) {
+        public function rollDie( $sides = self::DEFAULT_NUMBER_OF_SIDES ) {
             return rand(1,$sides);
         }
 
@@ -127,7 +127,7 @@
                 $this->results['final'] += $this->parseModifier($this->modifier);
                 
             }
-            
+
             // Min/max for entire roll
             $this->results['totalLowerBound'] = $this->numRolls * (($this->numDice*1)+$this->parseModifier($this->modifier));
             $this->results['totalUpperBound'] = $this->numRolls * (($this->numDice*$this->kindDice)+$this->parseModifier($this->modifier));
