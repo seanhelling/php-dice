@@ -82,7 +82,7 @@
             $this->numDice  =      !empty($diceRollArray[2][0]) ?
                                         $diceRollArray[2][0] : self::DEFAULT_NUMBER_OF_DICE;
             $this->kindDice =      !empty($diceRollArray[3][0]) ?
-                                        $diceRollArray[3][0] : self::DEFAULT_NUMBER_OF_SIDES; // true val was cast to an int before
+                                        intval($diceRollArray[3][0]) : self::DEFAULT_NUMBER_OF_SIDES;
             $this->modifier =      !empty($diceRollArray[4][0]) ?
                                         $diceRollArray[4][0] : self::DEFAULT_DICE_ROLL_MODIFIER;
         }
